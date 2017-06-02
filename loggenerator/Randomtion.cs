@@ -228,13 +228,10 @@ namespace loggenerator
 
         public Randomizer(Action<int> notifycallpack = null)
         {
-            Requests = new List<Request>();
             notify = notifycallpack;
         }
 
         private Group group { get; set; }
-
-        public List<Request> Requests { get; set; }
 
         public Randomizer Generate(Criteria criteria)
         {
@@ -279,11 +276,12 @@ namespace loggenerator
 
         public List<Request> ConvertToRequests()
         {
-            if (notify != null)
-                notify(98);
-
+            List<Request> Requests = new List<Request>();
             foreach (var p in group.People)
                 Requests.AddRange(p.GetRequests());
+
+            if (notify != null)
+                notify(98);
             return Requests;
         }
 

@@ -44,6 +44,7 @@ namespace loggenerator
             {
                 MessageBox.Show("data file \"" + file + "\" not found, please select it manually");
                 OpenFileDialog op = new OpenFileDialog();
+                op.InitialDirectory = Directory.GetCurrentDirectory();
                 if (op.ShowDialog() == DialogResult.OK)
                     file = op.FileName;
                 else
@@ -59,7 +60,7 @@ namespace loggenerator
         void testingRandomizer()
         {
             long testIndex = 0;
-            long testSize = 100_000_000;
+            long testSize = 100000000;
             long checkevery = testSize / 1000;
 
             Criteria x = new Criteria();
@@ -92,7 +93,7 @@ namespace loggenerator
             series.Points.Clear();
 
             long testIndex = 0;
-            long testSize = 1_00;
+            long testSize = 100;
             long checkevery = testSize / 100;
             int tmp = 0;
             double sum = 0;
@@ -246,8 +247,9 @@ namespace loggenerator
             catch { }
 
             SaveFileDialog sv = new SaveFileDialog();
-            sv.Filter = "text file|*.txt";
+            sv.Filter = "text file|*.txt|all file|*.*";
             sv.FileName = "log";
+            //sv.InitialDirectory = Directory.GetCurrentDirectory();
             if (sv.ShowDialog() == DialogResult.OK)
             {
                 savefilepath = sv.FileName;
@@ -263,14 +265,14 @@ namespace loggenerator
             
             stopwatch.Restart();
             Request.ResetSequence();
-            var r = new Randomizer(notify).Generate(cratiria).ConvertToRequests().OrderBy(x => x.Time).Select(x => x.ToString());
-            stopwatch.Stop();
+            var r = new Randomizer(notify).Generate(cratiria).ConvertToRequests().OrderBy(x => x.Time).Select(x => x.ToString());            
 
             notify(" Writing data into Hard ");
             notify(99);
 
             File.WriteAllLines(savefilepath, r);
 
+            stopwatch.Stop();
             notify(100);
             notify("GENERATING finished in " + stopwatch.ElapsedMilliseconds / 1000 + " sec");
 
@@ -376,6 +378,8 @@ namespace loggenerator
 
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = "XML file|*.xml|Any file|*.*";
+            save.FileName = "criteria";
+            //save.InitialDirectory = Directory.GetCurrentDirectory();
             if (save.ShowDialog() == DialogResult.OK)
             {
                 File.WriteAllText(save.FileName, xml);
@@ -405,6 +409,7 @@ namespace loggenerator
         {
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "XML file|*.xml|Any file|*.*";
+            //open.InitialDirectory = Directory.GetCurrentDirectory();
             if (open.ShowDialog() == DialogResult.OK)
             {
                 XmlDocument doc = new XmlDocument();
