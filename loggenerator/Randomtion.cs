@@ -146,9 +146,9 @@ namespace loggenerator
             return IPAdressLocation.NextWithReplacement();
         }
 
-        public string GeneratIPAddress()
+        public string GeneratIPAddress(ref string locationCode)
         {
-            return IPLocation.Generate(IPAdressLocation.NextWithReplacement());
+            return IPLocation.Generate(IPAdressLocation.NextWithReplacement(),ref locationCode);
         }
 
         public Request[] GeneratPath()
@@ -238,6 +238,7 @@ namespace loggenerator
             group = new Group();
             Person temp;
             int session;
+            string countryCode = "";
             for (int i = 0; i < criteria.TotalVisitorsCount; i++)
             {
                 temp = new Person()
@@ -245,7 +246,8 @@ namespace loggenerator
                     ID = i,
                     CookiesID = RandomString(),
                     Registed = criteria.GenerateRegistedVisitorOrNotRegsited(),
-                    IP = criteria.GeneratIPAddress(),
+                    IP = criteria.GeneratIPAddress(ref countryCode),
+                    CountryCode = countryCode,
                     Browsers = criteria.GeneratBrowser(),
                     OperationSystem = criteria.GeneratOS(),
                     MaleOrFemaleIfRegisted = criteria.GenerateMaleOrFemale(),
@@ -306,25 +308,25 @@ namespace loggenerator
         static string[] formats = { "H:m:s d-M-yyyy" };
         public static DateTime BuildDate(int h, int m, int s, int d, int M, int y,ref bool res)
         {
-            try
-            {
-                res = true;
-                return new DateTime(y, M, d, h, m, s);
-            }
-            catch { }
-            res = false;
-            return DateTime.Now;
+            //try
+            //{
+            //    res = true;
+            //    return new DateTime(y, M, d, h, m, s);
+            //}
+            //catch { }
+            //res = false;
+            //return DateTime.Now;
 
-            //DateTime t;
+            DateTime t;
 
-            //res = DateTime.TryParseExact(
-            //    h + ":" + m + ":" + s + " " + d + "-" + M + "-" + y,
-            //    formats,
-            //    CultureInfo.InvariantCulture,
-            //    DateTimeStyles.None,
-            //    out t);
+            res = DateTime.TryParseExact(
+                h + ":" + m + ":" + s + " " + d + "-" + M + "-" + y,
+                formats,
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None,
+                out t);
 
-            //return t;
+            return t;
         }
 
 

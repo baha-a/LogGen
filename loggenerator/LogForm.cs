@@ -522,5 +522,10 @@ namespace loggenerator
         {
             resetCriteria();
         }
+
+        private void nudVisitorsCount_ValueChanged(object sender, EventArgs e)
+        {
+            nudRegistedVisitors.Maximum = nudVisitorsCount.Value;
+        }
     }
 }

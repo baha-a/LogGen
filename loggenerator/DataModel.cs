@@ -32,6 +32,8 @@ namespace loggenerator
 
 
         public string IP { get; set; }
+        public string CountryCode { get; set; }
+
         public Browsers Browsers { get; set; }
         public OperationSystems OperationSystem { get; set; }
         private List<Request> Requstes { get; set; }
@@ -87,7 +89,8 @@ namespace loggenerator
                         .Append((++sequence).ToString("D" + 10)).Append(" ")
                         .Append(Father.CookiesID).Append(" ")
                         .Append(Father.Registed ? (Father.MaleOrFemaleIfRegisted == true ? "MALE" : "FMLE") : "NONE").Append(" ")
-                        .Append(Father.IP).Append(" '")
+                        .Append(Father.IP).Append(" ")
+                        .Append(Father.CountryCode).Append(" '")
                         .Append(Father.Browsers.ToString()).Append("' '")
                         .Append(Father.OperationSystem.ToString()).Append("' ")
                         .Append(Time.ToString("HH:mm:ss dd-MM-yyyy")).Append(" '")
@@ -118,9 +121,9 @@ namespace loggenerator
 
 
 
-        public static string Generate(string location)
+        public static string Generate(string location,ref string code)
         {
-            string code = "SY";
+            code = "SY";
             if (LogForm.countries.ContainsKey(location.ToLower()))
                 code = LogForm.countries[location.ToLower()].Code.ToUpper();
 

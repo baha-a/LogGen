@@ -339,10 +339,11 @@
             this.nudVisitorsCount.Size = new System.Drawing.Size(69, 20);
             this.nudVisitorsCount.TabIndex = 23;
             this.nudVisitorsCount.Value = new decimal(new int[] {
-            100,
+            1000,
             0,
             0,
             0});
+            this.nudVisitorsCount.ValueChanged += new System.EventHandler(this.nudVisitorsCount_ValueChanged);
             // 
             // nudAverageVisitsPerMonth
             // 
